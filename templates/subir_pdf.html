@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Subir PDF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #1f2937;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #374151;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #1d4ed8;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Subir nuevo PDF</h2>
+    <form action="/admin/subir_pdf" method="POST" enctype="multipart/form-data">
+      <label>ID:</label>
+      <input type="text" name="id">
+
+      <label>Código Verificador:</label>
+      <input type="text" name="codigoVerificador">
+
+      <label>Documento:</label>
+      <input type="text" name="documento">
+
+      <label>Fecha Vigencia:</label>
+      <input type="date" name="fechaVigencia">
+
+      <label>Archivo PDF:</label>
+      <input type="file" name="archivo">
+
+      <button type="submit">Subir</button>
+    </form>
+  </div>
+</body>
+</html>

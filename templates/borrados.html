@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Últimos Borrados</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fafb;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #1f2937;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      background-color: #f3f4f6;
+      text-align: left;
+    }
+    tr:hover {
+      background-color: #f1f5f9;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #1f2937;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Últimos PDFs Eliminados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre del PDF</th>
+        <th>Fecha de Borrado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for archivo, fecha in registros %}
+      <tr>
+        <td>{{ archivo }}</td>
+        <td>{{ fecha }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="/dashboard">← Volver al Dashboard</a>
+</body>
+</html>

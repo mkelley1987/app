@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #374151;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #fbbf24;
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100vh - 130px);
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Panel de Administración</h2>
+  </header>
+
+  <nav>
+    <a href="/admin/generar-qr" target="panel">Generar QR</a>
+    <a href="/admin/subir" target="panel">Subir PDF</a>
+    <a href="/admin/registros" target="panel">Ver Registros</a>
+	<a href="/admin/borrados">Ver últimos borrados</a>
+  </nav>
+
+  <iframe name="panel"></iframe>
+</body>
+</html>
