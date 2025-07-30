@@ -184,4 +184,5 @@ if __name__ == '__main__':
     scheduler.add_job(eliminar_pdfs_expirados, 'cron', hour=12, minute=0)  # todos los días a las 12:00 PM
     scheduler.start()
     
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+       app.run(host="0.0.0.0", port=port, debug=True)
