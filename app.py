@@ -6,6 +6,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import sqlite3
 import os
 from datetime import datetime
+from supabase_client import obtener_registros_supabase
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'pdfs'
@@ -82,11 +83,7 @@ def descargar_pdf(filename):
 # Ver registros en el dashboard
 @app.route('/admin/registros')
 def ver_registros():
-    conn = sqlite3.connect(DB_NAME)
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM documentos")
-    registros = cur.fetchall()
-    conn.close()
+    registros = obtener_registros_supabase()             # ← lee directo de Supabase
     return render_template('registros.html', registros=registros)
     
 @app.route('/admin/borrados')
@@ -180,9 +177,16 @@ def eliminar_pdfs_expirados():
 
 # Iniciar servidor
 if __name__ == '__main__':
+    # 1) Borrar PDFs vencidos inmediatamente al arrancar
+    eliminar_pdfs_expirados()
+
+    # 2) Programar la limpieza diaria a las 12:00
     scheduler = BackgroundScheduler()
-    scheduler.add_job(eliminar_pdfs_expirados, 'cron', hour=12, minute=0)  # todos los días a las 12:00 PM
+    scheduler.add_job(eliminar_pdfs_expirados,
+                      trigger='cron',
+                      hour=12, minute=0)
     scheduler.start()
-    
+
+    # 3) Arrancar Flask
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)

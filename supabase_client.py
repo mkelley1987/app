@@ -16,3 +16,21 @@ def subir_pdf_a_supabase(nombre_archivo, contenido_binario):
 def eliminar_pdf_supabase(nombre_archivo):
     response = supabase.storage.from_('docs').remove([nombre_archivo])
     return response
+    
+def obtener_registros_supabase():
+    """
+    Devuelve una lista de tuplas con el mismo orden que usa la plantilla:
+    (id, codigo_verificador, documento, fecha_vigencia, archivo_pdf)
+    """
+    resp = supabase.table("documentos").select("*").order("id", desc=False).execute()
+    filas = resp.data or []
+    return [
+        (
+            f["id"],
+            f["codigo_verificador"],
+            f["documento"],
+            f["fecha_vigencia"],
+            f["archivo_pdf"],
+        )
+        for f in filas
+    ]
