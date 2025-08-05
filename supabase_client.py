@@ -6,7 +6,7 @@
 # -----------------------------------------------------------
 
 import os
-from datetime import date
+from datetime import date, datetime
 from supabase import create_client, Client
 
 SUPABASE_URL  = os.getenv("SUPABASE_URL")
@@ -83,7 +83,6 @@ def obtener_registros_supabase(filtros: dict | None = None, limitar: int | None 
 # BORRAR REGISTRO + ARCHIVO
 # ------------------------------------------------------------------
 def borrar_registro_supabase(registro_id: int, archivo_pdf: str):
-    """Elimina el PDF del bucket y la fila asociada de la tabla."""
     supabase.storage.from_(BUCKET_NAME).remove([archivo_pdf])
     supabase.table("documentos").delete().eq("id", registro_id).execute()
 
@@ -103,6 +102,7 @@ def eliminar_pdfs_expirados():
         or []
     )
     for fila in vencidos:
+        registrar_borrado(archivo_pdf)
         borrar_registro_supabase(fila["id"], fila["archivo_pdf"])
 
 
@@ -119,3 +119,28 @@ def generar_url_firmada(archivo_pdf: str, segundos: int = 60) -> str:
         path=archivo_pdf, expires_in=segundos
     )
     return res["signedURL"]
+
+def registrar_borrado(archivo_pdf: str):
+    """Inserta una fila en la tabla 'borrados'."""
+    supabase.table("borrados").insert(
+        {
+            "archivo_pdf": archivo_pdf,
+            # fecha_borrado se autocompleta con default now()
+        }
+    ).execute()
+
+
+def obtener_borrados_supabase(limitar: int = 150):
+    """
+    Devuelve [(archivo_pdf, fecha_borrado), ...] ordenado desc.
+    """
+    data = (
+        supabase.table("borrados")
+        .select("*")
+        .order("fecha_borrado", desc=True)
+        .limit(limitar)
+        .execute()
+        .data
+        or []
+    )
+    return [(f["archivo_pdf"], f["fecha_borrado"]) for f in data]

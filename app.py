@@ -20,6 +20,7 @@ from supabase_client import (
     borrar_registro_supabase,
     eliminar_pdfs_expirados,
     generar_url_firmada,
+    obtener_borrados_supabase,
 )
 
 # ------------------------------------------------------------------
@@ -169,6 +170,10 @@ def subir_pdf_dashboard():
     flash("PDF subido y registrado correctamente")
     return redirect(url_for("ver_registros"))
 
+@app.route("/admin/borrados")
+def ver_borrados():
+    registros = obtener_borrados_supabase()  # 50 últimos por defecto
+    return render_template("borrados.html", registros=registros)
 
 # ------------------------------------------------------------------
 # Tareas programadas – limpieza de PDFs vencidos
