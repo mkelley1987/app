@@ -108,7 +108,26 @@ def api_subir_pdf():
 
     subir_pdf_y_metadatos(filename, contenido, codigo, documento, fecha)
     return jsonify({"status": "ok", "mensaje": "PDF subido exitosamente"})
+    
+    
+@app.route("/descargar/<path:archivo_pdf>")
+def descargar_pdf(archivo_pdf: str):
+    """
+    Devuelve una redirección (HTTP 302) a la URL real del archivo.
+    • Si tu bucket es privado → genera URL firmada temporal.
+    • Si es público → construye la URL pública directamente.
+    """
+    # 1) Si el bucket es PRIVADO (recomendado):
+    url = generar_url_firmada(archivo_pdf, segundos=60)
 
+    # ----------------------------------------------------
+    # Si tu bucket “docs” es PÚBLICO y prefieres no firmar,
+    # comenta la línea anterior y descomenta estas dos:
+    # base = os.getenv("SUPABASE_URL")
+    # url  = f"{base}/storage/v1/object/public/{BUCKET_NAME}/{archivo_pdf}"
+    # -----------------------------------------------------------
+
+    return redirect(url)
 
 # ------------------------------------------------------------------
 # Dashboard – Ver registros (tabla documentos)
