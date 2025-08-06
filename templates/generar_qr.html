@@ -105,7 +105,7 @@
       const fecha = document.getElementById("dateInput").value;
       const codigoVerificador = document.getElementById("verificadorInput").value;
 
-      const frontUrl = `front.html?id=${id}&codigoVerificador=${codigoVerificador}&documento=${documento}&fechaVigencia=${fecha}&tipoDocAValidar=000`;
+      const frontUrl = `https://bps.serviciosenlinea.uy/ServiciosEnLineaWeb/contenidosEmbebido?id=${id}&codigoVerificador=${codigoVerificador}&documento=${documento}&fechaVigencia=${fecha}&tipoDocAValidar=000`;
 
       document.getElementById("finalUrl").innerHTML = `<a href="${frontUrl}" target="_blank">${frontUrl}</a>`;
 
