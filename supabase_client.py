@@ -102,8 +102,10 @@ def eliminar_pdfs_expirados():
         or []
     )
     for fila in vencidos:
-        registrar_borrado(archivo_pdf)
-        borrar_registro_supabase(fila["id"], fila["archivo_pdf"])
+        archivo_pdf = fila["archivo_pdf"]       # <-- definir la variable
+        registrar_borrado(archivo_pdf)          # log opcional antes de borrar
+        borrar_registro_supabase(fila["id"], archivo_pdf)
+
 
 
 # ------------------------------------------------------------------

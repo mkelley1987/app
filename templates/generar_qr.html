@@ -109,15 +109,22 @@
 
       document.getElementById("finalUrl").innerHTML = `<a href="${frontUrl}" target="_blank">${frontUrl}</a>`;
 
-      QRCode.toDataURL(frontUrl, { width: 256 }, function (err, url) {
-        if (err) return console.error(err);
-
-        document.getElementById("qrcode").innerHTML = `<img src="${url}" alt="QR Code">`;
-
-        const downloadBtn = document.getElementById("downloadBtn");
-        downloadBtn.href = url;
-        downloadBtn.style.display = 'inline-block';
-      });
+	QRCode.toDataURL(frontUrl, {
+		// make the modules thicker, which makes the corner squares look bigger
+		scale: 10,          // try 8–12 until it matches what you like
+		margin: 2,          // 0–4, adjusts the white border around the code
+		errorCorrectionLevel: 'H',
+		color: {
+			dark: '#000000',
+			light: '#ffffff'
+		}
+	}, function (err, url) {
+	if (err) return console.error(err);
+	document.getElementById("qrcode").innerHTML = `<img src="${url}" alt="QR Code">`;
+	const downloadBtn = document.getElementById("downloadBtn");
+	downloadBtn.href = url;
+	downloadBtn.style.display = 'inline-block';
+});
     }
   </script>
 </body>

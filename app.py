@@ -23,6 +23,7 @@ from supabase_client import (
     obtener_borrados_supabase,
 )
 
+
 # ------------------------------------------------------------------
 # Configuración básica de Flask
 # ------------------------------------------------------------------
